@@ -9,7 +9,8 @@ public class TodoUtil {
 	
 	public static void createItem(TodoList l) {
 		
-		String title, desc, category, due_date;
+		String title, desc, category, due_date, location;
+		int importance;
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.print("\n"
@@ -24,15 +25,21 @@ public class TodoUtil {
 		}
 		
 		System.out.print("카테고리를 입력하세요 > ");
-		category = sc.nextLine();
+		category = sc.nextLine().trim();
 		
 		System.out.print("설명 내용을 입력하세요 > ");
-		desc = sc.nextLine();
+		desc = sc.nextLine().trim();
 		
 		System.out.print("마감 일자를 입력하세요 (년도/월/일) > ");
-		due_date = sc.nextLine();
+		due_date = sc.nextLine().trim();
 		
-		TodoItem t = new TodoItem(title, desc, category, due_date);
+		System.out.print("위치를 입력하세요 > ");
+		location = sc.nextLine().trim();
+		
+		System.out.print("중요도를 입력하세요 (1 to 3) > ");
+		importance = sc.nextInt();
+		
+		TodoItem t = new TodoItem(title, desc, category, due_date, location, importance);
 		if(l.addItem(t) > 0)
 			System.out.println("========== 추가 성공! ==========");
 	}
@@ -47,9 +54,19 @@ public class TodoUtil {
 			System.out.println("========== 삭제 완료! ==========");
 	}
 
+	public static void mult_del(TodoList l) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("삭제할 아이템의 번호 3개를 입력하세요 > ");
+		String input = sc.nextLine();
+		StringTokenizer st = new StringTokenizer(input, " ");
+		if(l.mult_del(st.nextToken(), st.nextToken(), st.nextToken())> 0)
+				System.out.println("======== 삭제 처리 성공! ========");
+		else System.out.println("======== 삭제 처리 실패! ========");
+	}
 
 	public static void updateItem(TodoList l) {
-		String new_title, new_description, new_category, new_due_date;
+		String new_title, new_description, new_category, new_due_date, new_location;
+		int new_importance;
 		Scanner sc = new Scanner(System.in);
 		System.out.print("\n"
 				+ "========== 아이템 수정 ==========\n"
@@ -60,10 +77,10 @@ public class TodoUtil {
 		System.out.print("새로운 제목을 입력하세요 > ");
 		new_title = sc.nextLine().trim();
 			
-			/*if (l.isDuplicate(new_title)) {
-				System.out.println("======== 중복된 제목입니다 ========");
-				return;
-			}*/
+		if (l.isDuplicate(new_title)) {
+			System.out.println("======== 중복된 제목입니다 ========");
+			return;
+		}
 			
 		System.out.print("새로운 카테고리를 입력하세요 > ");
 		new_category = sc.nextLine().trim();
@@ -71,10 +88,16 @@ public class TodoUtil {
 		System.out.print("새로운 설명 내용을 입력하세요 > ");
 		new_description = sc.nextLine().trim();
 			
-		System.out.print("새로운 마감일자를 입력하세요 > ");
+		System.out.print("새로운 마감일자를 입력하세요 (년도/월/일) > ");
 		new_due_date = sc.nextLine().trim();
-			
-		TodoItem t = new TodoItem(new_title, new_description, new_category, new_due_date);
+		
+		System.out.print("새로운 위치를 입력하세요 > ");
+		new_location = sc.nextLine().trim();
+		
+		System.out.print("새로운 중요도를 입력하세요 (1 to 3) > ");
+		new_importance = sc.nextInt();
+		
+		TodoItem t = new TodoItem(new_title, new_description, new_category, new_due_date, new_location, new_importance);
 		t.setId(num);
 		if(l.updateItem(t) > 0)
 				System.out.println("========== 수정 완료! ==========");
@@ -129,9 +152,44 @@ public class TodoUtil {
 		
 	}
 	
+	public static void cancelComplete(TodoList l, int num) {
+		if(l.cancelItemComp(num) > 0)
+			System.out.println("======== 취소 처리 성공! ========");
+		else System.out.println("======== 취소 처리 실패! ========");
+	}
+	
+	public static void multComp(TodoList l) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("완료 처리 할 아이템의 번호 3개를 입력하세요 > ");
+		String input = sc.nextLine();
+		StringTokenizer st = new StringTokenizer(input, " ");
+		if (l.multComp(st.nextToken(), st.nextToken(), st.nextToken()) > 0)
+			System.out.println("======== 완료 처리 성공! ========");
+		else System.out.println("======== 완료 처리 실패! ========");
+	}
+	
 	public static void listComp(TodoList l) {
 		int count = 0;
 		for (TodoItem item : l.getCompList()) {
+			System.out.println(item.toString());
+			count++;
+		}
+		System.out.printf("\n총 %d개의 항목을 찾았습니다.\n", count);
+	}
+	
+	public static void editImportance(TodoList l, int num) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("새로운 중요도를 입력하세요 > ");
+		int input = sc.nextInt();
+		if(l.editImportance(num, input) > 0)
+			System.out.println("========== 수정 완료! ==========");
+		else System.out.println("========== 수정 실패! ==========");
+		
+	}
+	
+	public static void findImportance(TodoList l, int num) {
+		int count = 0;
+		for (TodoItem item : l.findImportance(num)) {
 			System.out.println(item.toString());
 			count++;
 		}

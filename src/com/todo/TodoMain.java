@@ -34,7 +34,10 @@ public class TodoMain {
 			case "del":
 				TodoUtil.deleteItem(l);
 				break;
-				
+			
+			case "mult_del":
+				TodoUtil.mult_del(l);
+				break;
 			case "edit":
 				TodoUtil.updateItem(l);
 				break;
@@ -72,21 +75,49 @@ public class TodoMain {
 				TodoUtil.findList(l, keyword);
 				break;
 				
-				
 			case "find_cate":
 				String cate = sc.nextLine().trim();
 				TodoUtil.findCateList(l, cate);
 				break;
 				
 			case "comp":
-				int num = sc.nextInt();
-				TodoUtil.completeItem(l,num);
-				break;
-			
-			case "ls_comp":
-				TodoUtil.listComp(l);
+				int num1 = sc.nextInt();
+				TodoUtil.completeItem(l,num1);
 				break;
 				
+			case "comp_cancel":
+				int num2 = sc.nextInt();
+				TodoUtil.cancelComplete(l,num2);
+				break;
+				
+			case "mult_comp":
+				TodoUtil.multComp(l);
+				break;
+				
+			case "ls_comp":
+				System.out.println("\n========= 완료된 항목 ==========");
+				TodoUtil.listComp(l);
+				break;
+			
+			case "edit_importance":
+				int num3 = sc.nextInt();
+				TodoUtil.editImportance(l, num3);
+				break;
+				
+			case "find_importance":
+				int num4 = sc.nextInt();
+				TodoUtil.findImportance(l, num4);
+				break;
+				
+			case "ls_importance":
+				System.out.println("\n========= 정렬-중요도 (오름차순) ==========");
+				TodoUtil.listAll(l, "importance", 1);
+				break;
+				
+			case "ls_importance_desc":
+				System.out.println("\n========= 정렬-중요도 (내림차순) ==========");
+				TodoUtil.listAll(l, "importance", 0);
+				break;
 				
 			case "help":
 				Menu.displaymenu();
@@ -104,6 +135,7 @@ public class TodoMain {
 			
 			if(isList) l.getList();
 		} while (!quit);
+		System.out.println("\nHave a Wonderful Day!");
 		DbConnect.closeConnection();
 	}
 }

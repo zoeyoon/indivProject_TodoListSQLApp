@@ -9,16 +9,20 @@ public class TodoItem {
     private String current_date;
     private String category;
     private String due_date;
+    private String location;
     private int id;
     private int is_completed;
-
-    public TodoItem(String title, String desc, String category, String due_date){
+    private int importance;
+    
+    public TodoItem(String title, String desc, String category, String due_date, String location, int importance){
         this.title=title;
         this.desc=desc;
         this.category = category;
         this.due_date = due_date;
+        this.location = location;
         SimpleDateFormat date = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss");
         this.current_date = date.format(new Date());
+        this.importance = importance;
         
     }
     
@@ -62,6 +66,14 @@ public class TodoItem {
     	this.due_date = due_date;
     }
     
+    public String getLocation() {
+    	return location;
+    }
+    
+    public void setLocation(String location) {
+    	this.location = location;
+    }
+    
     public int getId(){
     	return id;
     }
@@ -77,10 +89,23 @@ public class TodoItem {
     public void setIs_Completed(int num) {
     	this.is_completed = num;
     }
+    
+    public int getImportance() {
+    	return importance;
+    }
+    
+    public void setImportance(int importance) {
+    	this.importance = importance;
+    }
      
     public String toString() {
+    	String mark;
+    	if (importance == 1) mark = "!";
+    	else if (importance == 2) mark = "!!";
+    	else mark = "!!!";
+    	
     	if (is_completed == 0)
-    		return id + " [" + category + "] " + title + " - " + desc + " - " + due_date + " - " + current_date;
-    	return id + " [" + category + "] " + title + " [V] - " + desc + " - " + due_date + " - " + current_date;
+    		return id + " [" + category + "] " + title + " - 설명: " + desc + " - 위치: " + location + " - 마감: " + due_date + " - " + current_date + " (" + mark + ")";
+    	return id + " [" + category + "] " + title + " [V] - 설명: " + desc + " - 위치: " + location + " - 마감: " + due_date + " - " + current_date + " (" + mark + ")";
     }
 }
