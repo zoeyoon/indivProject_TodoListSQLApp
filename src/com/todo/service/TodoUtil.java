@@ -160,7 +160,7 @@ public class TodoUtil {
 	
 	public static void multComp(TodoList l) {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("완료 처리 할 아이템의 번호 3개를 입력하세요 > ");
+		System.out.print("완료 처리 할 아이템의 번호 3개를 입력하세요 > ");
 		String input = sc.nextLine();
 		StringTokenizer st = new StringTokenizer(input, " ");
 		if (l.multComp(st.nextToken(), st.nextToken(), st.nextToken()) > 0)

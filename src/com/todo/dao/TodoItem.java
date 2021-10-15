@@ -23,7 +23,6 @@ public class TodoItem {
         SimpleDateFormat date = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss");
         this.current_date = date.format(new Date());
         this.importance = importance;
-        
     }
     
     public String getTitle() {
@@ -105,7 +104,7 @@ public class TodoItem {
     	else mark = "!!!";
     	
     	if (is_completed == 0)
-    		return id + " [" + category + "] " + title + " - 설명: " + desc + " - 위치: " + location + " - 마감: " + due_date + " - " + current_date + " (" + mark + ")";
-    	return id + " [" + category + "] " + title + " [V] - 설명: " + desc + " - 위치: " + location + " - 마감: " + due_date + " - " + current_date + " (" + mark + ")";
+    		return id + " [" + category + "] " + title + " | 설명: " + desc + " | 위치: " + location + " | 마감: " + due_date + " | 입력 시간: " + current_date + " | (" + mark + ")";
+    	return id + " [" + category + "] " + title + " [V] | 설명: " + desc + " | 위치: " + location + " | 마감: " + due_date + " | 입력 시간: " + current_date + " | (" + mark + ")";
     }
 }

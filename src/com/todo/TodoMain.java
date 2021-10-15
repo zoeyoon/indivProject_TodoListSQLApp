@@ -38,6 +38,7 @@ public class TodoMain {
 			case "mult_del":
 				TodoUtil.mult_del(l);
 				break;
+				
 			case "edit":
 				TodoUtil.updateItem(l);
 				break;
